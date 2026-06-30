@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
 
-RUN apt-get update && apt-get install -y libtinfo5 git
+# Updated to libtinfo6 to ensure it builds successfully on Apple Silicon
+RUN apt-get update && apt-get install -y libtinfo6 git
 
 USER node
 
