@@ -16,6 +16,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 1. Set up QEMU (Required for the runner to emulate ARM64)
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      # 2. Set up Docker Buildx (Required to build multi-arch manifests)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
@@ -34,4 +42,6 @@ jobs:
         with:
           context: .
           push: true
+          # 3. Explicitly tell Docker to build for BOTH platforms
+          platforms: linux/amd64,linux/arm64
           tags: ghcr.io/${{ env.OWNER_LC }}/purescript-template-env:latest
