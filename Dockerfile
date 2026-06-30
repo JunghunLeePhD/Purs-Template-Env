@@ -22,7 +22,6 @@ setopt PROMPT_SUBST
 export PROMPT='${COLOR_USR}%n ${COLOR_DIR}%1~ ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%% '
 EOF
 
-# Create the directory where VS Code Server looks for extensions
 RUN mkdir -p /home/node/.vscode-server/extensions
 
 # Download and extract the .vsix packages directly from the marketplace
@@ -35,6 +34,7 @@ RUN set -e; \
         mv /tmp/extension "/home/node/.vscode-server/extensions/${PUB}.${EXT}"; \
         rm /tmp/ext.zip; \
     }; \
+    install_ext nwolverson language-purescript; \
     install_ext nwolverson ide-purescript; \
     install_ext dbaeumer vscode-eslint; \
     install_ext esbenp prettier-vscode;
